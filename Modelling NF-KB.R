@@ -43,7 +43,7 @@ x0 <- c(A = 0, I = 0, P = 0)
 # Parameter values from Jaruszewicz-Błońska et al. (2023)
 alpha1 <- 0.00145 # s^-1 Spontaneous inactivation of IKK complex
 alpha2 <- 0.0763 # s^-1 IκBα degradation induced by IKK complex
-alpha3 <- 0.000372+0.000106+0.0428  # s^-1 IκBα synthesis and degradation of IκBα mRNA
+alpha3 <- 0.000372+0.000106 + 0.0428  # s^-1 IκBα synthesis and degradation of IκBα mRNA + Synthesis of A20 + Michaelis-Menten type constant (NF-κB inactivation)
 
 beta1 <- 0.00195 # s^-1 Activation of IKK complex
 beta2 <- 0.0946 # s^-1 IKK (IκBα|NF-κB) association
@@ -79,4 +79,17 @@ ggplot(res_NF_KB, aes(x = time)) +
                                             "NF-KB" = "green")) +
   theme_minimal()
 
+# Zoomin in on the first 50 seconds
+ggplot(res_NF_KB, aes(x = time)) +
+  geom_line(aes(y = A, color = "IKK complex")) +
+  geom_line(aes(y = I, color = "IKBa")) +
+  geom_line(aes(y = P, color = "NF-KB")) +
+  labs( x = "Time", y = "Concentration") +
+  scale_color_manual(name = " ", 
+                     values = c("IKK complex" = "blue", 
+                                "IKBa" = "orange", 
+                                "NF-KB" = "green")) +
+  xlim(0, 50) +
+  ylim(0,0.125) +
+  theme_minimal()
 
