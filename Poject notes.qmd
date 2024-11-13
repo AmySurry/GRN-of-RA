@@ -292,7 +292,7 @@ Many diseases, including cancer, and inflammatory and autoimmune diseases, are a
 
 -   The Wnt pathway plays a role in a variety of cancers and immune diseases and is related to various physiological processes, including cell proliferation and migration 
 
-**\[Image\]\
+**\[Image missing\]\
 **
 
 Genes behind immune response (CD97, FYB, CXCL1, IKBKE, CCR1, etc.), inflammatory response (CD97, CXCL1, C3AR1, CCR1, LYZ, etc.) and homeostasis (C3AR1, CCR1, PLN, CCL19, PPT1, etc.) have a major impact in RA ​\[3\]​.
@@ -345,7 +345,7 @@ Non-canonical pathway: Which unlike the canonical pathway, that is rapidly activ
 
 As a start of the modeling of this project we wanted to compute a simple model of the canonical pathway to investigate which parameters are important. ​
 
-**\[Image\]**
+**\[Image missing\]**
 
 Since we have not had the time to investigate the parameters yet our hypothesis very broad so far.​
 
@@ -409,9 +409,13 @@ In the plot above the components initial concentrations were set to zero, as we 
 
 You can see in the plot above that changing the initial values to 0.02µM didn't make any big difference. In the plot above the time period has been increased to 5000 sec (83,33 min or 1,39 h) to better see that the components reach a steady state concentration.
 
+#### Defining activation period
+
 We than made a little change to the model so in stead of the pathway either being active or inactive, a specific time period or multiple time periods for activation can be selected.
 
 ![](images/clipboard-937841925.png)
+
+#### Multiple activation periods:
 
 ![](images/clipboard-2594202303.png)
 
@@ -461,6 +465,16 @@ This implies that while $\beta_4$ is the key driver, interactions among $\beta_1
 
 -   **Nuclear NF-κB (Active Form)**: Upon activation, NF-κB concentration in the nucleus can transiently rise to 1-5 nM before feedback mechanisms downregulate its activity. This nuclear concentration is more variable because it depends on the strength and nature of the stimulus.
 
+### Biological relevance
+
+We have found a pure biological paper that illustrates what the dynamics should look like...
+
+Result 1
+
+The simple model doesn't seem to represent biology correctly
+
+-   I think it might be due to the low inhibition rate of NF-$\kappa$B by I$\kappa$B$\alpha$
+
 ## Expanded canonical and non-canonical pathway
 
 ![](images/clipboard-1648789835.png)
@@ -482,6 +496,26 @@ We decided to to go with the first suggestion, but with modifications as we want
 ![](images/clipboard-226859265.png)
 
 From the NF-$\kappa$B and I$\kappa$B$\alpha$ complex I$\kappa$B$\alpha$ is phosphorylated/degraded and NF-$\kappa$B is released.
+
+Next steps for the canonical pathway:
+
+-   Reevaluate the new expanded model and make sure it is correct
+
+-   Visualise the expanded model with R
+
+-   Change the x-axis to be in minutes or hours instead of seconds
+
+-   Sensitivity analysis of the initial values (in stead of trying to find them in the literature)
+
+-   Maybe expand the model even more and add free and nuclear NF-kB
+
+-   Move between states
+
+-   Include the feedback mechanism of IkBa binding to NF-kB creating new complexes
+
+-   AND or OR function for the IkBa - NF-kB complex to see how they effect each other
+
+-   include hill function in the equations if needed
 
 ### The non-canonical pathway
 
