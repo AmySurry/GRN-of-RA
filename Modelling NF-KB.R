@@ -3,6 +3,7 @@ rm(list = ls())
 # Load libraries
 library(deSolve)
 library(ggplot2)
+library(ODEsensitivity)
 
 # T/F statement for activating the pathway
 activation = T
@@ -20,8 +21,8 @@ NF_KB <- function(time,state,parameters){
   
   # Defining the genes included in the model
   A <- state[1] # IKK complex
-  I <- state[2] # IKBa
-  P <- state[3] # NF-KB
+  I <- state[2] # IkBa
+  P <- state[3] # NF-kB
   
   # Defining the parameters
   a1 <- parameters["alpha1"]
@@ -84,13 +85,13 @@ res_NF_KB <- as.data.frame(res_NF_KB) # Convert the results to a data frame for 
 #### Plotting the results ####
 plot <- ggplot(res_NF_KB, aes(x = time)) +
   geom_line(aes(y = A, color = "IKK complex"),lwd = 1) +
-  geom_line(aes(y = I, color = "IKBa"),lwd = 1) +
-  geom_line(aes(y = P, color = "NF-KB"),lwd = 1) +
+  geom_line(aes(y = I, color = "IkBa"),lwd = 1) +
+  geom_line(aes(y = P, color = "NF-kB"),lwd = 1) +
   labs( x = "Time (sec)", y = "Concentration (µM)") +
   scale_color_manual(name = " ", 
                      values = c("IKK complex" = "blue", 
-                                            "IKBa" = "orange", 
-                                            "NF-KB" = "green")) +
+                                            "IkBa" = "orange", 
+                                            "NF-kB" = "green")) +
   theme_minimal() +
   # Change the font size and style of the axis and legend text
   theme(axis.title = element_text(size = 12, face = "bold"),
