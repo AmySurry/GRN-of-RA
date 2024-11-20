@@ -9,11 +9,11 @@ library(ODEsensitivity)
 activation = T
 
 # Activation time period - can be a single value or a vector
-# t_start <- 0   # Start time for activation
-# t_end <- 5000     # End time for activation
+t_start <- 3600   # Start time for activation
+t_end <- 20000     # End time for activation
 
-t_start <- c(0,14400)   # Start time for activation
-t_end <- c(14400,40000)     # End time for activation
+#t_start <- c(0,14400)   # Start time for activation
+#t_end <- c(14400,40000)     # End time for activation
 
 
 #### Creating the model for the NF-KB pathway ####
@@ -77,7 +77,7 @@ NF_KB <- function(time,state,parameters){
 # Initial condition 
 # x0 <- c(A = 0, I = 0, P = 0) 
 x0 <- c(IKKn = 0.02, # µM (Unknown)
-        IKKa = 0.02, # µM (Unknown)
+        IKKa = 0, # µM (Unknown)
         NFkBn = 0.02, # µM (found in the literature - Hoffmann et al. (2002))
         A20 = 0.02, 
         IkBa = 0.02,
@@ -101,7 +101,7 @@ parameters <- c(k3 = 0.00145, # s^-1 Spontaneous inactivation of IKK complex
 
 
 # Time sequence
-times <- seq(0, 40000, by = 1) 
+times <- seq(0, 20000, by = 1) 
 
 # Solve ODEs
 res_NF_KB <- ode(x0, times, NF_KB, parameters, maxsteps=1000000) 
