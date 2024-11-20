@@ -44,7 +44,7 @@ NF_KB <- function(time,state,parameters){
   C3a <- parameters["C3a"]
   
   # Activation of the pathway (on or off)
-  Tr <- 1 # Receptor inactivation
+  Tr <- 0 # Receptor inactivation
   
   if(length(t_start) > 1){ # If there are multiple activation periods
     for(i in 1:length(t_start)){
@@ -66,8 +66,8 @@ NF_KB <- function(time,state,parameters){
   dIKKa <- (Tr*k1*IKKn) - (k3+Kdeg+(Tr*k2*A20))*IKKa
   dNFkBn <- (a3*IKKa)*(1-NFkBn)*(delta/(IkBa+delta)) - (i1a*IkBa)*(NFkBn/(NFkBn+epsilon))
   dA20 <- (Cdeg*NFkBn) - (Cdeg*A20)
-  dIkBa <- (C4a*IkBat) - (C5a*IkBa) - (a2*IKKa*IkBa) - (a3*IKKa*(1-NFkBn)*(IkBa/(IkBa-delta))) - (i1a*IkBa*(NFkBn/(NFkBn+epsilon)))
-  dIkBat <- (C3a*NFkBn) - (C3a*IkBat)
+  dIkBa <- (C4a*IkBat) - (C5a*IkBa) - (a2*IKKa*IkBa) - (a3*IKKa*(1-NFkBn)*(IkBa/(IkBa+delta))) - (i1a*IkBa*(NFkBn/(NFkBn+epsilon)))
+  dIkBat <- (C3a*NFkBn) - (C3a*IkBat) #- (C4a*IkBat)
   
   return(list(c(dIKKn,dIKKa,dNFkBn,dA20,dIkBa,dIkBat)))
 }
@@ -101,12 +101,11 @@ parameters <- c(k3 = 0.00145, # s^-1 Spontaneous inactivation of IKK complex
 
 
 # Time sequence
-times <- seq(0, 14400, by = 1) 
+times <- seq(0, 40000, by = 1) 
 
 # Solve ODEs
-res_NF_KB <- ode(x0, times, NF_KB, parameters) 
+res_NF_KB <- ode(x0, times, NF_KB, parameters, maxsteps=1000000) 
 res_NF_KB <- as.data.frame(res_NF_KB) # Convert the results to a data frame for plotting
-
 
 #### Plotting the results ####
 plot <- ggplot(res_NF_KB, aes(x = time)) +
