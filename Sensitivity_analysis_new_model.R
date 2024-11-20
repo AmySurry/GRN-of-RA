@@ -145,7 +145,7 @@ NF_KB_sensitivity <- function(t,x,p){
   
   with(as.list(c(x,p)), {
     
-    R <- 1
+    Tr <- 1
     
     # The differential equations
     dIKKn <- Kdeg - (Kdeg*IKKn) - (Tr*k1*IKKn)
