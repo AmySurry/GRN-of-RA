@@ -69,6 +69,7 @@ NF_KB <- function(time,state,parameters){
   dA20 <- (Cdeg*NFkBn) - (Cdeg*A20)
   dIkBa <- (C4a*IkBat) - (C5a*IkBa) - (a2*IKKa*IkBa) - (a3*IKKa*(1-NFkBn)*(IkBa/(IkBa+delta))) - (i1a*IkBa*(NFkBn/(NFkBn+epsilon)))
   dIkBat <- (C3a*NFkBn) - (C3a*IkBat) #- (C4a*IkBat)
+  dIkBat <- (C3a*NFkBn) - (C3a*IkBat)
   
   return(list(c(dIKKn,dIKKa,dNFkBn,dA20,dIkBa,dIkBat)))
 }
