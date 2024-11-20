@@ -30,7 +30,6 @@ NF_KB <- function(time,state,parameters){
   
   # Defining the parameters
   Kdeg <- parameters["Kdeg"]
-  Kprod <- parameters["Kprod"]
   a2 <- parameters["a2"]
   k1 <- parameters["k1"]
   a3 <- parameters["a3"]
@@ -63,7 +62,7 @@ NF_KB <- function(time,state,parameters){
   }
   
   # The differential equations
-  dIKKn <- Kprod - (Kdeg*IKKn) - (Tr*k1*IKKn)
+  dIKKn <- Kdeg - (Kdeg*IKKn) - (Tr*k1*IKKn)
   dIKKa <- (Tr*k1*IKKn) - (k3+Kdeg+(Tr*k2*A20))*IKKa
   dNFkBn <- (a3*IKKa)*(1-NFkBn)*(delta/(IkBa+delta)) - (i1a*IkBa)*(NFkBn/(NFkBn+epsilon))
   dA20 <- (Cdeg*NFkBn) - (Cdeg*A20)
@@ -78,11 +77,11 @@ NF_KB <- function(time,state,parameters){
 #### Solving the differential equations ####
 # Initial condition 
 # x0 <- c(A = 0, I = 0, P = 0) 
-x0 <- c(IKKn = 0.02, # µM (Unknown)
+x0 <- c(IKKn = 1, # µM (Unknown)
         IKKa = 0, # µM (Unknown)
         NFkBn = 0.02, # µM (found in the literature - Hoffmann et al. (2002))
         A20 = 0.02, 
-        IkBa = 0.02,
+        IkBa = 0.5,
         IkBat = 0.02)
 
 # Parameter values from Jaruszewicz-Błońska et al. (2023)
@@ -92,8 +91,7 @@ parameters <- c(k3 = 0.00145, # s^-1 Spontaneous inactivation of IKK complex
                 k1 = 0.00195, # s^-1 Activation of IKK complex
                 a3 = 0.0946, # s^-1 IKK (IκBα|NF-κB) association
                 i1a = 0.000595, # s^-1 IκBα nuclear import leading to... (repression of NF-κB)
-                Kdeg = 0.000125,
-                Kprod = 0.000025,
+                Kdeg = 0.000107,
                 k2 = 0.0357,
                 delta = 0.108,
                 epsilon = 0.0428,
@@ -148,6 +146,23 @@ if(t_start[1] !=res_NF_KB$time[1] && t_end[length(t_end)] != res_NF_KB$time[leng
 # Show the plot
 print(plot)
 
+print(plot <- ggplot(res_NF_KB, aes(x = time)) +
+        geom_line(aes(y = IKKn, color = "IKKn"),lwd = 1))
+
+print(plot <- ggplot(res_NF_KB, aes(x = time)) +
+        geom_line(aes(y = IKKa, color = "IKKa"),lwd = 1))
+
+print(plot <- ggplot(res_NF_KB, aes(x = time)) +
+        geom_line(aes(y = NFkBn, color = "NF-kB"),lwd = 1))
+
+print(plot <- ggplot(res_NF_KB, aes(x = time)) +
+        geom_line(aes(y = A20, color = "A20"),lwd = 1))
+
+print(plot <- ggplot(res_NF_KB, aes(x = time)) +
+        geom_line(aes(y = IkBa, color = "IkBa"),lwd = 1))
+
+print(plot <- ggplot(res_NF_KB, aes(x = time)) +
+        geom_line(aes(y = IkBat, color = "IkBat"),lwd = 1))
 
 
 # # Zoomin in on the first 50 seconds
