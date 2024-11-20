@@ -567,6 +567,10 @@ $$
 
 Validating that we have reproduced the model correctly, by comparing to their the results in the article.
 
+Our initial values:
+
+x0 \<- c(IKKn = 0.02, IKKa = 0, NFkBn = 0.02, A20 = 0.02, IkBa = 0.02, IkBat = 0.02)
+
 From the article:
 
 ![](images/clipboard-3732869475.png)
@@ -574,5 +578,23 @@ From the article:
 Our results:
 
 ![](images/clipboard-2119850020.png)
+
+3 activation periods:
+
+`t_start <- c(0,5400, 10800) # Start time for activation`
+
+`t_end <- c(2700,8100,13500) # End time for activation`
+
+Their results:
+
+![](images/clipboard-2491533524.png)
+
+Our results:
+
+![](images/clipboard-2034193286.png)
+
+### Tweaking the model - initial values
+
+Our model seem to be capturing the right dynamics, but the initial concentration values are incorrect. Changing the initial values to ... seem to ...
 
 ### Combining the canonical and non-canonical pathway
