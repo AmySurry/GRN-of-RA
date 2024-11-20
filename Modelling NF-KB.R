@@ -30,6 +30,7 @@ NF_KB <- function(time,state,parameters){
   
   # Defining the parameters
   Kdeg <- parameters["Kdeg"]
+  Kprod <- parameters["Kprod"]
   a2 <- parameters["a2"]
   k1 <- parameters["k1"]
   a3 <- parameters["a3"]
@@ -62,7 +63,7 @@ NF_KB <- function(time,state,parameters){
   }
   
   # The differential equations
-  dIKKn <- Kdeg - (Kdeg*IKKn) - (Tr*k1*IKKn)
+  dIKKn <- Kprod - (Kdeg*IKKn) - (Tr*k1*IKKn)
   dIKKa <- (Tr*k1*IKKn) - (k3+Kdeg+(Tr*k2*A20))*IKKa
   dNFkBn <- (a3*IKKa)*(1-NFkBn)*(delta/(IkBa+delta)) - (i1a*IkBa)*(NFkBn/(NFkBn+epsilon))
   dA20 <- (Cdeg*NFkBn) - (Cdeg*A20)
@@ -90,7 +91,8 @@ parameters <- c(k3 = 0.00145, # s^-1 Spontaneous inactivation of IKK complex
                 k1 = 0.00195, # s^-1 Activation of IKK complex
                 a3 = 0.0946, # s^-1 IKK (IκBα|NF-κB) association
                 i1a = 0.000595, # s^-1 IκBα nuclear import leading to... (repression of NF-κB)
-                Kdeg = 0.000107, 
+                Kdeg = 0.000125,
+                Kprod = 0.000025,
                 k2 = 0.0357,
                 delta = 0.108,
                 epsilon = 0.0428,
