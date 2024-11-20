@@ -235,7 +235,7 @@ In the I1-FFL, the two arms of the FFL act in opposition: X activates Z, but als
 Equations for the incoherent type 1 FFL:
 
 $$
-\frac{dY}{dt} = f(x) - \alpha \cdot Y
+\frac{dZ}{dt} = f(x) - \alpha \cdot Y
 $$
 
 OR function:
@@ -388,7 +388,7 @@ The generation of the equations from the canonical pathway of NF-$\kappa$B are s
 For out model we are using the parameter values presented by Jaruszewicz-Błońska et al.
 
 | Parameter | Value | Description |
-|------------------|------------------|-----------------------------------|
+|-------------------|-------------------|-----------------------------------|
 | $\alpha_1$ | 0.00145 $s^{-1}$ | Spontaneous inactivation of IKK complex |
 | $\alpha_2$ | 0.0763 $s^{-1}$ | IκBα degradation induced by IKK complex |
 | $\alpha_3$ | 0.043278 $s^{-1}$ | IκBα and A20 synthesis (leading to degradation of NF-κB), and Michaelis-Menten type constant (NF-κB inactivation) |
@@ -522,5 +522,57 @@ Next steps for the canonical pathway:
 A separate model has been made for the non-canonical part of the NF-$\kappa$B pathway:
 
 ![](images/clipboard-2552562566.png)
+
+## New canonical model
+
+We had difficulties with the differential equations, so we tried reproducing a model from a paper by Jaruszewicz-Błońska et al.
+
+![](images/clipboard-948162487.png)
+
+Inactivated IKK
+
+$$
+\frac{d[IKKn]}{dt}=k_{deg}-k_{deg} \cdot IKK_n - R \cdot k_1 \cdot IKK_n
+$$
+
+Activated IKK
+
+$$
+\frac{d[IKK_a]}{dt} = R \cdot k_1 \cdot IKK_n - (k_3+k_{deg}) \cdot IKK_a - R \cdot k_2 \cdot A20 \cdot IKK_a
+$$
+
+Nuclear NF-$\kappa$B
+
+$$
+\frac{d[NFkB_n]}{dt} = a_3 \cdot IKK_a \cdot (1-NFkB_n) \cdot \frac{\delta}{IkBa+\delta}-i_{1a}\cdot IkBa \cdot \frac{NFkB_n}{NFkB_n+\epsilon}
+$$
+
+A20
+
+$$
+\frac{d[A20]}{dt}=c_{deg} \cdot NFkB_n - c_{deg} \cdot A20
+$$
+
+I$\kappa$Ba
+
+$$
+\frac{IkBa}{dt}=c_4 \cdot IkBa_t-c_{5a} \cdot IkBa - a_3 \cdot IKK_a \cdot (1-NFkB_n)\cdot \frac{IkBa}{IkBa+delta}-i_{1a}\cdot IkBa \cdot \frac{NFkB_n}{NFkB_n+\epsilon}
+$$
+
+I$\kappa$Ba mRNA
+
+$$
+\frac{d[IkBa_t]}{dt} = c_{3a} \cdot NFkB_n - c_{3a} \cdot IkBa_t
+$$
+
+Validating that we have reproduced the model correctly, by comparing to their the results in the article.
+
+From the article:
+
+![](images/clipboard-3732869475.png)
+
+Our results:
+
+![](images/clipboard-2119850020.png)
 
 ### Combining the canonical and non-canonical pathway
