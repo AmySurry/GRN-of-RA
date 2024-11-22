@@ -1,8 +1,10 @@
 ---
 title: "GRN project notes"
 format: 
-  pdf:
-    embed-resources: true
+  docx:
+    toc: true
+    number-sections: false
+    highlight-style: github
 editor: visual
 ---
 
@@ -388,7 +390,7 @@ The generation of the equations from the canonical pathway of NF-$\kappa$B are s
 For out model we are using the parameter values presented by Jaruszewicz-Błońska et al.
 
 | Parameter | Value | Description |
-|-------------------|-------------------|-----------------------------------|
+|----|----|----|
 | $\alpha_1$ | 0.00145 $s^{-1}$ | Spontaneous inactivation of IKK complex |
 | $\alpha_2$ | 0.0763 $s^{-1}$ | IκBα degradation induced by IKK complex |
 | $\alpha_3$ | 0.043278 $s^{-1}$ | IκBα and A20 synthesis (leading to degradation of NF-κB), and Michaelis-Menten type constant (NF-κB inactivation) |
@@ -593,8 +595,36 @@ Our results:
 
 ![](images/clipboard-2034193286.png)
 
-### Tweaking the model - initial values
+### Tweaking the model
 
-Our model seem to be capturing the right dynamics, but the initial concentration values are incorrect. Changing the initial values to ... seem to ...
+When TNFa (the receptor) is inactive we would expect the concentrations to be constant. But with the model we do not observe this for IkBa:
 
-### Combining the canonical and non-canonical pathway
+![](images/clipboard-2628135105.png)
+
+Therefore we have decided to remove the spontaneous degradation of IkBa from the model, so the degradation only is induced by IKKa.
+
+![](images/clipboard-2052470648.png)
+
+When compairing our model to the results in the article we saw that our model more or less captures the right dynamics, but the initial concentration values are incorrect. We have therefore changed the initial values to:
+
+`x0 <- c(IKKn = 1, IKKa = 0, NFkBn = 0, A20 = 0, IkBa = 0.3, IkBat = 0)`
+
+![](images/clipboard-1349486267.png)
+
+![](images/clipboard-299282147.png)
+
+`x0 <- c(IKKn = 1, IKKa = 0, NFkBn = 0, A20 = 0, IkBa = 0.6, IkBat = 0)`
+
+![](images/clipboard-1024476484.png)
+
+![](images/clipboard-1364912479.png)
+
+When removing the spontaneous degradation of IkBa the concentration when inactivating TNFa (the receptor) increases to a steady state instead of increasing and then decreasing due to the spontaneous degradation.
+
+### Figure 8A
+
+Three types of the oscillatory responses of the reduced model to tonic TFN stimulation: Left subpanels show nuclear NFκBn(t) in response to tonic TNF stimulation started at t = 1 hour, whereas the right subpanels show trajectories projected on the (NFκBn, IκBα) plane.
+
+![](images/clipboard-255216299.png)
+
+![](images/clipboard-3681542696.png)

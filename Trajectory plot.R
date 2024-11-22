@@ -11,7 +11,7 @@ activation = T
 
 # Activation time period - can be a single value or a vector
 t_start <- 3600   # Start time for activation
-t_end <- 18000     # End time for activation
+t_end <-  32400     # End time for activation
 
 # t_start <- c(0,5400, 10800)   # Start time for activation
 # t_end <- c(2700,8100,13500)     # End time for activation
@@ -44,7 +44,7 @@ NF_KB <- function(time,state,parameters){
   C4a <- parameters["C4a"]
   C5a <- parameters["C5a"]
   C3a <- parameters["C3a"]
-
+  
   # Activation of the pathway (on or off)
   Tr <- 0 # Receptor inactivation
   
@@ -105,7 +105,7 @@ parameters <- c(k3 = 0.00145, # s^-1 Spontaneous inactivation of IKK complex
 
 
 # Time sequence
-times <- seq(0, 18000, by = 1) 
+times <- seq(0, 32400, by = 1) 
 
 # Solve ODEs
 res_NF_KB <- ode(x0, times, NF_KB, parameters, maxsteps=1000000) 
@@ -114,64 +114,18 @@ res_NF_KB <- as.data.frame(res_NF_KB) # Convert the results to a data frame for 
 
 
 #### Plotting the results ####
-plot <- ggplot(res_NF_KB, aes(x = time / 3600)) +  # Converting seconds to hours
-  geom_line(aes(y = IKKn, color = "IKKn"), lwd = 1) +
-  geom_line(aes(y = IKKa, color = "IKKa"), lwd = 1) +
-  geom_line(aes(y = NFkBn, color = "NFkBn"), lwd = 1) +
-  geom_line(aes(y = A20, color = "A20"), lwd = 1) +
-  geom_line(aes(y = IkBa, color = "IkBa"), lwd = 1) +
-  geom_line(aes(y = IkBat, color = "IkBat"), lwd = 1) +
-  labs(x = "Time (hours)", y = "Concentration (µM)") +
-  scale_color_manual(name = " ", 
-                     values = c("IKKn" = "blue", 
-                                "IKKa" = "orange", 
-                                "NFkBn" = "green",
-                                "A20" = "pink",
-                                "IkBa" = "gold1",
-                                "IkBat" = "red")) +
+p_NFkBn <- ggplot(res_NF_KB, aes(x = time/3600, y = NFkBn)) +
+  geom_line(linewidth = 1, col = "blue") +
+  labs( x = "Time (hours)", y = "Concentration (µM)", title = "NF-kBn") +
+  theme_minimal()
+
+
+trajectory <- ggplot(res_NF_KB, aes(x = NFkBn, y = IkBa)) +
+  geom_point(size = 0.5, col = "red") +
+  labs(x = "NFkBn", y = "IkBa") +
   theme_minimal() +
   theme(axis.title = element_text(size = 12, face = "bold"),
         axis.text = element_text(size = 10, face = "bold"),
         legend.text = element_text(size = 10))
 
-# Add markers for activation and relaxation
-if (t_start[1] != res_NF_KB$time[1] || t_end[length(t_end)] != res_NF_KB$time[length(res_NF_KB$time)]) {
-  if (activation) {
-    plot <- plot + 
-      geom_vline(xintercept = t_start / 3600, linetype = "dotted", color = "darkgreen") + # Converting t_start to hours
-      geom_vline(xintercept = t_end / 3600, linetype = "dotted", color = "darkred") + # Converting t_end to hours
-      annotate("text", x = t_start / 3600 + 0.1, 
-               y = max(res_NF_KB$IkBa, res_NF_KB$A20, res_NF_KB$NFkBn, res_NF_KB$IKKa, res_NF_KB$IKKn), 
-               label = "Activation", color = "darkgreen", vjust = -0.5, hjust = 0) +
-      annotate("text", x = t_end / 3600 + 0.1, 
-               y = max(res_NF_KB$IkBa, res_NF_KB$A20, res_NF_KB$NFkBn, res_NF_KB$IKKa, res_NF_KB$IKKn), 
-               label = "Relaxation", color = "darkred", vjust = -0.5, hjust = 0)
-  }
-}
-
-# Show the plot
-print(plot)
-
-
-
-p_IKKa <- ggplot(res_NF_KB, aes(x = time/3600, y = IKKa)) +
-  geom_line() +
-  labs( x = "Time (hours)", y = "Concentration (µM)", title = "IKKa")
-
-p_NFkBn <- ggplot(res_NF_KB, aes(x = time/3600, y = NFkBn)) +
-  geom_line() +
-  labs( x = "Time (hours)", y = "Concentration (µM)", title = "NF-kBn")
-
-p_IkBa <- ggplot(res_NF_KB, aes(x = time/3600, y = IkBa)) +
-  geom_line() +
-  labs( x = "Time (hours)", y = "Concentration (µM)", title = "IkBa")
-
-p_A20 <- ggplot(res_NF_KB, aes(x = time/3600, y = A20)) +
-  geom_line() +
-  labs( x = "Time (hours)", y = "Concentration (µM)", title = "A20")
-
-p_IkBat <- ggplot(res_NF_KB, aes(x = time/3600, y = IkBat)) +
-  geom_line() +
-  labs( x = "Time (hours)", y = "Concentration (µM)", title = "IkBat")
-
-grid.arrange(p_IKKa, p_NFkBn, p_IkBa, p_A20, p_IkBat, nrow = 1)
+grid.arrange(p_NFkBn,trajectory, nrow = 1)
