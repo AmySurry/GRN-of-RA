@@ -70,15 +70,13 @@ NF_KB <- function(time,state,parameters){
   dA20 <- (Cdeg*NFkBn) - (Cdeg*A20)
   dIkBa <- (C4a*IkBat) - (C5a*IkBa) - (a2*IKKa*IkBa) - (a3*IKKa*(1-NFkBn)*(IkBa/(IkBa+delta))) - (i1a*IkBa)*(NFkBn/(NFkBn+epsilon))
   dIkBat <- (C3a*NFkBn) - (C3a*IkBat) #- (C4a*IkBat)
-  dIkBat <- (C3a*NFkBn) - (C3a*IkBat)
-  
+
   return(list(c(dIKKn,dIKKa,dNFkBn,dA20,dIkBa,dIkBat)))
 }
 
 
 #### Solving the differential equations ####
 # Initial condition 
-# x0 <- c(A = 0, I = 0, P = 0) 
 x0 <- c(IKKn = 1, 
         IKKa = 0, 
         NFkBn = 0,
@@ -87,12 +85,11 @@ x0 <- c(IKKn = 1,
         IkBat = 0)
 
 # Parameter values from Jaruszewicz-Błońska et al. (2023)
-parameters <- c(k3 = 0.00145, # s^-1 Spontaneous inactivation of IKK complex
-                a2 = 0.0763, # s^-1 IκBα degradation induced by IKK complex 
-                #alpha3 = 0.000372 + 0.000106 + 0.0428,  # s^-1 IκBα synthesis and degradation of IκBα mRNA + Synthesis of A20 + Michaelis-Menten type constant (NF-κB inactivation)
-                k1 = 0.00195, # s^-1 Activation of IKK complex
-                a3 = 0.0946, # s^-1 IKK (IκBα|NF-κB) association
-                i1a = 0.000595, # s^-1 IκBα nuclear import leading to... (repression of NF-κB)
+parameters <- c(k3 = 0.00145,
+                a2 = 0.0763,
+                k1 = 0.00195,
+                a3 = 0.0946,
+                i1a = 0.000595, 
                 Kdeg = 0.000125,
                 Kprod = 0.000025,
                 k2 = 0.0357,
