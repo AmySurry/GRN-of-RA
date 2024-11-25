@@ -605,7 +605,7 @@ When TNFa (the receptor) is inactive we would expect the concentrations to be co
 
 ![](images/clipboard-2628135105.png)
 
-Therefore we have decided to remove the spontaneous degradation of IkBa from the model, so the degradation only is induced by IKKa.
+Therefore we have decided to remove the spontaneous degradation of IkBa (C5a\*IkBa) from the model, so the degradation only is induced by IKKa.
 
 ![](images/clipboard-2052470648.png)
 
