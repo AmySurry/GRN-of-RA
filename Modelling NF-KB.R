@@ -4,6 +4,7 @@ rm(list = ls())
 library(deSolve)
 library(ggplot2)
 library(ODEsensitivity)
+library(gridExtra)
 
 # T/F statement for activating the pathway
 activation = T
@@ -163,6 +164,29 @@ print(plot <- ggplot(res_NF_KB, aes(x = time)) +
 
 print(plot <- ggplot(res_NF_KB, aes(x = time)) +
         geom_line(aes(y = IkBat, color = "IkBat"),lwd = 1))
+
+# Implementing individual plot in one side-by-side
+p_IKKa <- ggplot(res_NF_KB, aes(x = time/3600, y = IKKa)) +
+  geom_line() +
+  labs( x = "Time (hours)", y = "Concentration (µM)", title = "IKKa")
+
+p_NFkBn <- ggplot(res_NF_KB, aes(x = time/3600, y = NFkBn)) +
+  geom_line() +
+  labs( x = "Time (hours)", y = "Concentration (µM)", title = "NF-kBn")
+
+p_IkBa <- ggplot(res_NF_KB, aes(x = time/3600, y = IkBa)) +
+  geom_line() +
+  labs( x = "Time (hours)", y = "Concentration (µM)", title = "IkBa")
+
+p_A20 <- ggplot(res_NF_KB, aes(x = time/3600, y = A20)) +
+  geom_line() +
+  labs( x = "Time (hours)", y = "Concentration (µM)", title = "A20")
+
+p_IkBat <- ggplot(res_NF_KB, aes(x = time/3600, y = IkBat)) +
+  geom_line() +
+  labs( x = "Time (hours)", y = "Concentration (µM)", title = "IkBat")
+
+grid.arrange(p_IKKa, p_NFkBn, p_IkBa, p_A20, p_IkBat, nrow = 1)
 
 
 # # Zoomin in on the first 50 seconds
