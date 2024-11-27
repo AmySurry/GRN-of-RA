@@ -390,7 +390,7 @@ The generation of the equations from the canonical pathway of NF-$\kappa$B are s
 For out model we are using the parameter values presented by Jaruszewicz-Błońska et al.
 
 | Parameter | Value | Description |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | $\alpha_1$ | 0.00145 $s^{-1}$ | Spontaneous inactivation of IKK complex |
 | $\alpha_2$ | 0.0763 $s^{-1}$ | IκBα degradation induced by IKK complex |
 | $\alpha_3$ | 0.043278 $s^{-1}$ | IκBα and A20 synthesis (leading to degradation of NF-κB), and Michaelis-Menten type constant (NF-κB inactivation) |

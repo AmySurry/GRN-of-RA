@@ -2,6 +2,8 @@
 library(deSolve)
 library(ggplot2)
 library(ODEsensitivity)
+library(RColorBrewer)
+
 
 # Sobol sensitivity analysis function
 sobol_sensitivity <- function(model, var_pars, x0_init, var_min, var_max, time_val, n_iterations = 3000){
@@ -47,7 +49,7 @@ NF_KB_sensitivity <- function(t,x,p){
     dIKKa <- (Tr*k1*IKKn) - (k3+Kdeg+(Tr*k2*A20))*IKKa
     dNFkBn <- (a3*IKKa)*(1-NFkBn)*(delta/(IkBa+delta)) - (i1a*IkBa)*(NFkBn/(NFkBn+epsilon))
     dA20 <- (Cdeg*NFkBn) - (Cdeg*A20)
-    dIkBa <- (C4a*IkBat) - (C5a*IkBa) - (a2*IKKa*IkBa) - (a3*IKKa*(1-NFkBn)*(IkBa/(IkBa+delta))) - (i1a*IkBa*(NFkBn/(NFkBn+epsilon)))
+    dIkBa <- (C4a*IkBat) - (a2*IKKa*IkBa) - (a3*IKKa*(1-NFkBn)*(IkBa/(IkBa+delta))) - (i1a*IkBa*(NFkBn/(NFkBn+epsilon)))
     dIkBat <- (C3a*NFkBn) - (C3a*IkBat) #- (C4a*IkBat)
     dIkBat <- (C3a*NFkBn) - (C3a*IkBat)
     
@@ -109,7 +111,7 @@ bound_max_var <- c(0.0003,
 
 
 # Time sequence
-times <- seq(0.01, 21600, by = 1) 
+times <- seq(0.01, 2000, by = 1) 
 
 # Doing the sensitivity analysis
 sensitive_sobol_final <- sobol_sensitivity(NF_KB_sensitivity,
@@ -119,22 +121,25 @@ sensitive_sobol_final <- sobol_sensitivity(NF_KB_sensitivity,
                                            bound_max_var,
                                            times)
 
-sensitive_sobol_final$time <- sensitive_sobol_final$time / 3600
 
+# Define a color palette (e.g., using 13 colors to match the number of parameters)
+color_palette <- brewer.pal(n = 11, name = "Spectral")  # For up to 11 colors
+color_palette <- c(color_palette, "darkgreen")  # Adding extra distinct colors if needed
 
-#Plottig the sensitivity analysis for all
+# Plotting the sensitivity analysis for all
 # plot(sensitive_sobol_final, pars_plot = bound_var[1:13], state_plot = "all", main_title = "All sensitivity - SOBOL", type = "l", lwd = 3)
-
+par(mfrow=c(3,2))
 #For IKKn 
-plot(sensitive_sobol_final, pars_plot = bound_var[1:13], state_plot = "IKKn", main_title = "IKKn sensitivity - SOBOL", type = "l", lwd = 3)
+plot(sensitive_sobol_final, pars_plot = bound_var[1:13], state_plot = "IKKn", main_title = "IKKn sensitivity - SOBOL", type = "l", lwd = 3, col = color_palette)
 #For IKKa 
-plot(sensitive_sobol_final, pars_plot = bound_var[1:13], state_plot = "IKKa", main_title = "IKKa sensitivity - SOBOL", type = "l", lwd = 3)
+plot(sensitive_sobol_final, pars_plot = bound_var[1:13], state_plot = "IKKa", main_title = "IKKa sensitivity - SOBOL", type = "l", lwd = 3, col = color_palette)
 #For NFkBn
-plot(sensitive_sobol_final, pars_plot = bound_var[1:13], state_plot = "NFkBn", main_title = "NFkBn sensitivity - SOBOL", type = "l", lwd = 3)
+plot(sensitive_sobol_final, pars_plot = bound_var[1:13], state_plot = "NFkBn", main_title = "NFkBn sensitivity - SOBOL", type = "l", lwd = 3, col = color_palette)
 #For A20 
-plot(sensitive_sobol_final, pars_plot = bound_var[1:13], state_plot = "A20", main_title = "A20 sensitivity - SOBOL", type = "l", lwd = 3)
+plot(sensitive_sobol_final, pars_plot = bound_var[1:13], state_plot = "A20", main_title = "A20 sensitivity - SOBOL", type = "l", lwd = 3, col = color_palette)
 #For IkBa 
-plot(sensitive_sobol_final, pars_plot = bound_var[1:13], state_plot = "IkBa", main_title = "IkBa sensitivity - SOBOL", type = "l", lwd = 3)
+plot(sensitive_sobol_final, pars_plot = bound_var[1:13], state_plot = "IkBa", main_title = "IkBa sensitivity - SOBOL", type = "l", lwd = 3, col = color_palette)
 #For IkBat
-plot(sensitive_sobol_final, pars_plot = bound_var[1:13], state_plot = "IkBat", main_title = "IkBat sensitivity - SOBOL", type = "l", lwd = 3)
+plot(sensitive_sobol_final, pars_plot = bound_var[1:13], state_plot = "IkBat", main_title = "IkBat sensitivity - SOBOL", type = "l", lwd = 3, col = color_palette)
+
 
