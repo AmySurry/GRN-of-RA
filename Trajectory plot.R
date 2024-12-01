@@ -223,109 +223,169 @@ trajectory_A <- ggplot(res_A, aes(x = NFkBn, y = IkBa)) +
 A <- grid.arrange(A_NFkBn,trajectory_A, nrow = 1, top = textGrob("A: a2 = 0.0762, c5a = 0.000058, i1a = 0.000595", gp = gpar(fontsize = 16, fontface = "bold"), hjust = 0, x=0.02))
 grid.arrange(A_NFkBn,trajectory_A, nrow = 1)
 
+t_IkBa <- ggplot(res_A, aes(x = NFkBn, y = IkBa)) +
+  geom_point(size = 0.5, col = "red") +
+  labs(x = "NFkBn", y = "IkBa") +
+  theme_minimal() +
+  theme(axis.title = element_text(size = 12, face = "bold"),
+        axis.text = element_text(size = 10, face = "bold"),
+        legend.text = element_text(size = 10))
+  # geom_arrow(arrow_mid = "head_wings", mid_place = c(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9), col = "red")
 
-ggplot(res_A, aes(x = NFkBn, y = A20)) +
-  # geom_point(size = 0.5, col = "red") +
+
+t_A20 <- ggplot(res_A, aes(x = NFkBn, y = A20)) +
+  geom_point(size = 0.5, col = "red") +
   labs(x = "NFkBn", y = "A20") +
   theme_minimal() +
   theme(axis.title = element_text(size = 12, face = "bold"),
         axis.text = element_text(size = 10, face = "bold"),
-        legend.text = element_text(size = 10))+
-  geom_arrow(arrow_mid = "head_wings", mid_place = c(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9), col = "red")
+        legend.text = element_text(size = 10))
+  # geom_arrow(arrow_mid = "head_wings", mid_place = c(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9), col = "red")
 
 
-ggplot(res_A, aes(x = NFkBn, y = IKKa)) +
-  # geom_point(size = 0.5, col = "red") +
+t_IKKa <- ggplot(res_A, aes(x = NFkBn, y = IKKa)) +
+  geom_point(size = 0.5, col = "red") +
   labs(x = "NFkBn", y = "IKKa") +
   theme_minimal() +
   theme(axis.title = element_text(size = 12, face = "bold"),
         axis.text = element_text(size = 10, face = "bold"),
-        legend.text = element_text(size = 10))+
-  geom_arrow(arrow_mid = "head_wings", mid_place = c(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9), col = "red")
+        legend.text = element_text(size = 10))
+  # geom_arrow(arrow_mid = "head_wings", mid_place = c(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9), col = "red")
 
 
-ggplot(res_A, aes(x = NFkBn, y = IkBat)) +
-  # geom_point(size = 0.5, col = "red") +
+t_IkBat <- ggplot(res_A, aes(x = NFkBn, y = IkBat)) +
+  geom_point(size = 0.5, col = "red") +
   labs(x = "NFkBn", y = "IkBat") +
   theme_minimal() +
   theme(axis.title = element_text(size = 12, face = "bold"),
         axis.text = element_text(size = 10, face = "bold"),
-        legend.text = element_text(size = 10)) +
-  geom_arrow(arrow_mid = "head_wings", mid_place = c(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9), col = "red")
+        legend.text = element_text(size = 10)) 
+  # geom_arrow(arrow_mid = "head_wings", mid_place = c(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9), col = "red")
+
+
+grid.arrange(t_IkBa,t_A20,t_IKKa,t_IkBat, nrow = 2)
 
 
 
-
-B_NFkBn <- ggplot(res_B, aes(x = time/3600, y = NFkBn)) +
-  geom_line(linewidth = 1, col = "blue") +
-  labs( x = "Time (hours)", y = "NF-kBn") +
-  theme_minimal()
-
-
-trajectory_B <- ggplot(res_B, aes(x = NFkBn, y = IkBa)) +
+ggplot(res_A, aes(x = IkBa, y = IkBat)) +
   geom_point(size = 0.5, col = "red") +
-  labs(x = "NFkBn", y = "IkBa") +
+  labs(x = "IkBa", y = "IkBat") +
   theme_minimal() +
   theme(axis.title = element_text(size = 12, face = "bold"),
         axis.text = element_text(size = 10, face = "bold"),
-        legend.text = element_text(size = 10))
+        legend.text = element_text(size = 10)) 
+# geom_arrow(arrow_mid = "head_wings", mid_place = c(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9), col = "red")
 
-B <- grid.arrange(B_NFkBn,trajectory_B, nrow = 1, top = textGrob("B: a2 =0.02, c5a = 0.00001, i1a = 0.0001", gp = gpar(fontsize = 16, fontface = "bold"), hjust = 0, x=0.02))
-
-
-C_NFkBn <- ggplot(res_C, aes(x = time/3600, y = NFkBn)) +
-  geom_line(linewidth = 1, col = "blue") +
-  labs( x = "Time (hours)", y = "NF-kBn") +
-  theme_minimal()
-
-
-trajectory_C <- ggplot(res_C, aes(x = NFkBn, y = IkBa)) +
+ggplot(res_A, aes(x = IkBa, y = A20)) +
   geom_point(size = 0.5, col = "red") +
-  labs(x = "NFkBn", y = "IkBa") +
+  labs(x = "IkBa", y = "A20") +
   theme_minimal() +
   theme(axis.title = element_text(size = 12, face = "bold"),
         axis.text = element_text(size = 10, face = "bold"),
-        legend.text = element_text(size = 10))
+        legend.text = element_text(size = 10)) 
+# geom_arrow(arrow_mid = "head_wings", mid_place = c(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9), col = "red")
 
-C <- grid.arrange(C_NFkBn,trajectory_C, nrow = 1, top = textGrob("C: a2 =0.01, c5a = 0.00001, i1a = 0.0001", gp = gpar(fontsize = 16, fontface = "bold"), hjust = 0, x=0.02))
-
-grid.arrange(A,B,C, nrow = 3)
-
-
-
-
-NFkBn_9A <- ggplot(res_9A, aes(x = time/3600, y = NFkBn)) +
-  geom_line(linewidth = 1, col = "blue") +
-  labs( x = "Time (hours)", y = "NF-kBn") +
-  theme_minimal()
-
-
-trajectory_9A <- ggplot(res_9A, aes(x = NFkBn, y = IkBa)) +
+ggplot(res_A, aes(x = IkBa, y = IKKa)) +
   geom_point(size = 0.5, col = "red") +
-  labs(x = "NFkBn", y = "IkBa") +
+  labs(x = "IkBa", y = "IKKa") +
   theme_minimal() +
   theme(axis.title = element_text(size = 12, face = "bold"),
         axis.text = element_text(size = 10, face = "bold"),
-        legend.text = element_text(size = 10))
+        legend.text = element_text(size = 10)) 
+# geom_arrow(arrow_mid = "head_wings", mid_place = c(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9), col = "red")
 
-p_9A <- grid.arrange(NFkBn_9A,trajectory_9A, nrow = 1, top = textGrob("A: k2 = 0", gp = gpar(fontsize = 16, fontface = "bold"), hjust = 0, x=0.02))
-
-
-NFkBn_9B <- ggplot(res_9B, aes(x = time/3600, y = NFkBn)) +
-  geom_line(linewidth = 1, col = "blue") +
-  labs( x = "Time (hours)", y = "NF-kBn") +
-  theme_minimal()
-
-
-trajectory_9B <- ggplot(res_9B, aes(x = NFkBn, y = A20)) +
+ggplot(res_A, aes(x = A20, y = IkBat)) +
   geom_point(size = 0.5, col = "red") +
-  labs(x = "NFkBn", y = "A20") +
+  labs(x = "A20", y = "IkBat") +
   theme_minimal() +
   theme(axis.title = element_text(size = 12, face = "bold"),
         axis.text = element_text(size = 10, face = "bold"),
-        legend.text = element_text(size = 10))
+        legend.text = element_text(size = 10)) 
+# geom_arrow(arrow_mid = "head_wings", mid_place = c(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9), col = "red")
 
-p_9B <- grid.arrange(NFkBn_9B,trajectory_9B, nrow = 1, top = textGrob("B: k2 = 3.57, i1a = 0.01 ", gp = gpar(fontsize = 16, fontface = "bold"), hjust = 0, x=0.02))
+ggplot(res_A, aes(x = A20, y = IKKa)) +
+  geom_point(size = 0.5, col = "red") +
+  labs(x = "A20", y = "IKKa") +
+  theme_minimal() +
+  theme(axis.title = element_text(size = 12, face = "bold"),
+        axis.text = element_text(size = 10, face = "bold"),
+        legend.text = element_text(size = 10)) 
+# geom_arrow(arrow_mid = "head_wings", mid_place = c(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9), col = "red")
 
 
-grid.arrange(p_9A,p_9B, nrow = 2)
+
+
+
+# B_NFkBn <- ggplot(res_B, aes(x = time/3600, y = NFkBn)) +
+#   geom_line(linewidth = 1, col = "blue") +
+#   labs( x = "Time (hours)", y = "NF-kBn") +
+#   theme_minimal()
+# 
+# 
+# trajectory_B <- ggplot(res_B, aes(x = NFkBn, y = IkBa)) +
+#   geom_point(size = 0.5, col = "red") +
+#   labs(x = "NFkBn", y = "IkBa") +
+#   theme_minimal() +
+#   theme(axis.title = element_text(size = 12, face = "bold"),
+#         axis.text = element_text(size = 10, face = "bold"),
+#         legend.text = element_text(size = 10))
+# 
+# B <- grid.arrange(B_NFkBn,trajectory_B, nrow = 1, top = textGrob("B: a2 =0.02, c5a = 0.00001, i1a = 0.0001", gp = gpar(fontsize = 16, fontface = "bold"), hjust = 0, x=0.02))
+# 
+# 
+# C_NFkBn <- ggplot(res_C, aes(x = time/3600, y = NFkBn)) +
+#   geom_line(linewidth = 1, col = "blue") +
+#   labs( x = "Time (hours)", y = "NF-kBn") +
+#   theme_minimal()
+# 
+# 
+# trajectory_C <- ggplot(res_C, aes(x = NFkBn, y = IkBa)) +
+#   geom_point(size = 0.5, col = "red") +
+#   labs(x = "NFkBn", y = "IkBa") +
+#   theme_minimal() +
+#   theme(axis.title = element_text(size = 12, face = "bold"),
+#         axis.text = element_text(size = 10, face = "bold"),
+#         legend.text = element_text(size = 10))
+# 
+# C <- grid.arrange(C_NFkBn,trajectory_C, nrow = 1, top = textGrob("C: a2 =0.01, c5a = 0.00001, i1a = 0.0001", gp = gpar(fontsize = 16, fontface = "bold"), hjust = 0, x=0.02))
+# 
+# grid.arrange(A,B,C, nrow = 3)
+# 
+# 
+# 
+# 
+# NFkBn_9A <- ggplot(res_9A, aes(x = time/3600, y = NFkBn)) +
+#   geom_line(linewidth = 1, col = "blue") +
+#   labs( x = "Time (hours)", y = "NF-kBn") +
+#   theme_minimal()
+# 
+# 
+# trajectory_9A <- ggplot(res_9A, aes(x = NFkBn, y = IkBa)) +
+#   geom_point(size = 0.5, col = "red") +
+#   labs(x = "NFkBn", y = "IkBa") +
+#   theme_minimal() +
+#   theme(axis.title = element_text(size = 12, face = "bold"),
+#         axis.text = element_text(size = 10, face = "bold"),
+#         legend.text = element_text(size = 10))
+# 
+# p_9A <- grid.arrange(NFkBn_9A,trajectory_9A, nrow = 1, top = textGrob("A: k2 = 0", gp = gpar(fontsize = 16, fontface = "bold"), hjust = 0, x=0.02))
+# 
+# 
+# NFkBn_9B <- ggplot(res_9B, aes(x = time/3600, y = NFkBn)) +
+#   geom_line(linewidth = 1, col = "blue") +
+#   labs( x = "Time (hours)", y = "NF-kBn") +
+#   theme_minimal()
+# 
+# 
+# trajectory_9B <- ggplot(res_9B, aes(x = NFkBn, y = A20)) +
+#   geom_point(size = 0.5, col = "red") +
+#   labs(x = "NFkBn", y = "A20") +
+#   theme_minimal() +
+#   theme(axis.title = element_text(size = 12, face = "bold"),
+#         axis.text = element_text(size = 10, face = "bold"),
+#         legend.text = element_text(size = 10))
+# 
+# p_9B <- grid.arrange(NFkBn_9B,trajectory_9B, nrow = 1, top = textGrob("B: k2 = 3.57, i1a = 0.01 ", gp = gpar(fontsize = 16, fontface = "bold"), hjust = 0, x=0.02))
+# 
+# 
+# grid.arrange(p_9A,p_9B, nrow = 2)
