@@ -2,7 +2,7 @@
 title: "GRN project notes"
 format: 
   docx:
-    toc: true
+    toc: false
     number-sections: false
     highlight-style: github
 editor: visual
@@ -423,6 +423,10 @@ We than made a little change to the model so in stead of the pathway either bein
 
 ### Sensitivity analysis
 
+-   The **left panel** shows **first-order Sobol' indices**, representing the individual effect of each parameter on the model output.
+
+-   The **right panel** shows **total Sobol' indices**, representing the overall effect, including interactions with other parameters.
+
 ![](images/clipboard-3320015071.png)
 
 In the plot, the green line ($\alpha_3$​) has the highest first-order and total Sobol’ indices over time, indicating that it has the most significant influence on the IKK complex. This suggests that variations in $\alpha_3$​ have a strong effect on the IKK complex response. Other parameters, particularly $\alpha_1$​ and $\beta_4$​, have a lower impact on the IKK complex, as shown by their lower indices.
@@ -601,7 +605,7 @@ When TNFa (the receptor) is inactive we would expect the concentrations to be co
 
 ![](images/clipboard-2628135105.png)
 
-Therefore we have decided to remove the spontaneous degradation of IkBa from the model, so the degradation only is induced by IKKa.
+Therefore we have decided to remove the spontaneous degradation of IkBa (C5a\*IkBa) from the model, so the degradation only is induced by IKKa.
 
 ![](images/clipboard-2052470648.png)
 
@@ -621,10 +625,90 @@ When compairing our model to the results in the article we saw that our model mo
 
 When removing the spontaneous degradation of IkBa the concentration when inactivating TNFa (the receptor) increases to a steady state instead of increasing and then decreasing due to the spontaneous degradation.
 
-### Figure 8A
+### Figure 8
 
 Three types of the oscillatory responses of the reduced model to tonic TFN stimulation: Left subpanels show nuclear NFκBn(t) in response to tonic TNF stimulation started at t = 1 hour, whereas the right subpanels show trajectories projected on the (NFκBn, IκBα) plane.
+
+Initial values:
+
+`x0 <- c(IKKn = 1, IKKa = 0, NFkBn = 0, A20 = 0, IkBa = 0, IkBat = 0)`
+
+a2 = 0.0762, c5a = 0.000058, i1a = 0.000595
 
 ![](images/clipboard-255216299.png)
 
 ![](images/clipboard-3681542696.png)
+
+a2 =0.02, c5a = 0.00001, i1a = 0.0001
+
+![![](images/clipboard-4157842604.png)](images/clipboard-3676288697.png)
+
+a2 =0.01, c5a = 0.00001, i1a = 0.0001
+
+![![](images/clipboard-2131920843.png)](images/clipboard-2943177054.png)
+
+### Figure 9
+
+Influence of A20 feedback on the reduced model responses to tonic TNF stimulation.
+
+![](images/clipboard-914090182.png)
+
+![](images/clipboard-3267468433.png)
+
+### Sensitivity analysis - SOBOL
+
+-   The **left panel** shows **first-order Sobol' indices**, representing the individual effect of each parameter on the model output.
+
+-   The **right panel** shows **total Sobol' indices**, representing the overall effect, including interactions with other parameters.
+
+![](images/clipboard-3625890589.png)
+
+#### IKKa
+
+![](images/clipboard-3703878228.png)
+
+#### NF-kBn
+
+![](images/clipboard-1952606272.png)
+
+#### A20
+
+![](images/clipboard-1378168066.png)
+
+#### IkBa
+
+![](images/clipboard-3286177664.png)
+
+#### IkBat
+
+![](images/clipboard-539174966.png)
+
+## Therapy
+
+Increasing degradation of IKKa by increasing C5a and a2 by 0%, 25%, 50%, 75%, 100% respectively
+
+![](images/clipboard-407577897.png)
+
+Increasing degradation of IkBa by increasing k2 and k3 by 0%, 25%, 50%, 75%, 100% respectively
+
+![](images/clipboard-2576226832.png)
+
+Decreasing degradation of IkBa by decreasing k2 and k3 by 0%, 25%, 50%, 75%, 100% respectively
+
+![](images/clipboard-3937426112.png)
+
+Decreasing the translation of IkBat into IkBa by decreasing C4a by 0%, 25%, 50%, 75%, 100% respectively
+
+![](images/clipboard-3798923072.png)
+
+Decreasing NFkBn release from complex by decreasing a3 by 0%, 25%, 50%, 75%, 100% respectively
+
+![](images/clipboard-1958452885.png)
+
+Increasing NFkBn and IkBa complex formation by increasing i1a by 0%, 25%, 50%, 75%, 100% respectively
+
+![](images/clipboard-4040707510.png)
+
+Decreasing NFkBn binding to DNA (decrease A20 and IkBat activation/degradation) by decreasing C3a and Cdeg by 0%, 25%, 50%, 75%, 100% respectively
+
+![](images/clipboard-3736461870.png)
