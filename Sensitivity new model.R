@@ -5,10 +5,9 @@ library(ODEsensitivity)
 library(RColorBrewer)
 library(pbapply)
 
-
 # Sobol sensitivity analysis function
-sobol_sensitivity <- function(model, var_pars, x0_init, var_min, var_max, time_val, n_iterations = 3000){
-  
+sobol_sensitivity <- function(model, var_pars, x0_init, var_min, var_max, time_val, n_iterations = 500){
+
   # Inputs:
 
   # model -> the ODEs which you want to analyze
@@ -18,10 +17,8 @@ sobol_sensitivity <- function(model, var_pars, x0_init, var_min, var_max, time_v
   # var_max -> the largest value the parameters can have (chosen randomly in the space)
   # time_val -> the time interval, which the sensitivity analysis will take place.
   # n_iterations -> the number of iterations that will be run.
-  
-  # Print a message to indicate the start of the process
-  cat("Starting Sobol sensitivity analysis...\n")
-  
+
+
   # Progress bar for tracking iterations
   sobol_result <- ODEsobol(mod = model, # the model that is used
                            pars = var_pars, # the parameters present
@@ -34,13 +31,10 @@ sobol_sensitivity <- function(model, var_pars, x0_init, var_min, var_max, time_v
                            sobol_method = "Martinez", # which sobol method to be used
                            ode_method = "lsoda", # which ode method to be used (this is default in ode)
                            parallel_eval = TRUE, # parallel evaluation, not important to understand
-                           parallel_eval_ncores = 2, # number of cores to be used to evaluate, also not important to understand
-                           progress_bar = TRUE)  # Add progress bar
-  
-  cat("Sensitivity analysis complete!\n")
-  
+                           parallel_eval_ncores = 2) # number of cores to be used to evaluate, also not important to understand
+
   return(sobol_result)
-  
+
 }
 
 # Function with the differential equations for the sensitivity analysis, used as the model parameter in the sobol_sensitivity function
@@ -117,7 +111,7 @@ bound_max_var <- c(0.0003,
 
 
 # Time sequence
-times <- seq(0.01, 500, by = 1) 
+times <- seq(0.01, 18000, by = 1) 
 
 # Doing the sensitivity analysis
 sensitive_sobol_final <- sobol_sensitivity(NF_KB_sensitivity,

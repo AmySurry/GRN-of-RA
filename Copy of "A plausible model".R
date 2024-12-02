@@ -10,14 +10,14 @@ library(gridExtra)
 activation = T
 
 # Activation time period - can be a single value or a vector
-t_start <- 0   # Start time for activation
-t_end <- 43200     # End time for activation
+# t_start <- 0   # Start time for activation
+# t_end <- 43200     # End time for activation
 
 # t_start <- c(3600,18000, 32400)   # Start time for activation
 # t_end <- c(10800,25200,39600)     # End time for activation
 
-# t_start <- seq(0,43199, by = 2)
-# t_end <- seq(1,43200, by = 2)
+t_start <- seq(0,43199, by = 2)
+t_end <- seq(1,43200, by = 2)
 
 #### Creating the model for the NF-KB pathway ####
 NF_KB <- function(time,state,parameters){
@@ -78,12 +78,12 @@ NF_KB <- function(time,state,parameters){
 
 #### Solving the differential equations ####
 # Initial condition 
-x0 <- c(IKKn = 0.06024097, 
-        IKKa = 0.009872504, 
-        NFkBn = 0.2894435,
-        A20 = 0.2891814, 
-        IkBa = 0.3217943,
-        IkBat = 0.2894812)
+x0 <- c(IKKn = 1, 
+        IKKa = 0, 
+        NFkBn = 0,
+        A20 = 0, 
+        IkBa = 0,
+        IkBat = 0)
 
 # Parameter values from Jaruszewicz-Błońska et al. (2023)
 parameters <- c(k3 = 0.00145,
